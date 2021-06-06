@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
 import {
-  createIncrementAction, 
-  createDecrementAction,
-  createIncrementAsyncAction
+  increment, 
+  decrement,
+  incrementAsync
 } from '../../redux/actions/count'
 import {connect} from 'react-redux'
 // a函数返回的对象中的key就作为传递给ui组件props的key value
@@ -34,10 +34,10 @@ class CountUI extends Component {
     this.props.incrementAsync(value * 1, 500)
   }
   render() {
-    const {count, personList} = this.props
+    const {count, personCount} = this.props
     return (
       <div>
-        <h2>我是Count组件,下方组件总人数为{personList.length}</h2>
+        <h2>我是Count组件,下方组件总人数为{personCount}</h2>
         <h4>当前求和为：{count}</h4>
         <select ref={c => this.selectNumber = c}>
           <option value="1">1</option>
@@ -54,12 +54,15 @@ class CountUI extends Component {
   }
 }
 export default connect(
-  state => ({count: state.count, personList: state.person}),
+  state => ({
+    count: state.count, 
+    personCount: state.persons.length
+  }),
   // mapDispatchToProps简写
   {
-    increment: createIncrementAction,
-    decrement: createDecrementAction,
-    incrementAsync: createIncrementAsyncAction,
+    increment,
+    decrement,
+    incrementAsync,
   }
 )(CountUI)
 
